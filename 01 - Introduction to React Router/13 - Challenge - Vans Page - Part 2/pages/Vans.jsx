@@ -1,10 +1,10 @@
-import React from "react"
+import { useState, useEffect } from "react";
 
 /**
  * Challenge: Fetch and map over the data to display it on
  * the vans page. For an extra challenge, spend time styling
  * it to look like the Figma design.
- * 
+ *
  * Hints:
  * 1. Use `fetch(/api/vans)` to kick off the request to get the
  *    data from our fake Mirage JS server
@@ -14,9 +14,26 @@ import React from "react"
  *    a function". You can ignore it for now.
  */
 
-
 export default function Vans() {
-    return (
-        <h1>Vans page goes here 🚐</h1>
-    )
+  const [vans, setVans] = useState([]);
+  useEffect(() => {
+    fetch("/api/vans")
+      .then((response) => response.json())
+      .then((data) => setVans(data.vans));
+  }, []);
+  return (
+    <div>
+      {vans.map((van) => {
+        const { id, name, price, description, imageUrl } = van;
+        return (
+          <div key={id}>
+            <img src={imageUrl} alt="Van" />
+            <h3>{name}</h3>
+            <h4>{price}</h4>
+            <p>{description}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
