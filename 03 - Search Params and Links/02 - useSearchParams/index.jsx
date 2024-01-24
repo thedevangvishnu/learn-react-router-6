@@ -17,7 +17,7 @@ const swCharacters = [
 
 function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams.values());
+  console.log(searchParams.get("type"));
   const charEls = swCharacters.map((char) => (
     <div key={char.name}>
       <h3
